@@ -39,12 +39,12 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
 
   // Precise Sequence matching reference
   useEffect(() => {
-    const t1 = setTimeout(() => setPhase('reveal'), 1600); 
-    const t2 = setTimeout(() => { 
+    // Transition directly to 'done' and slide up without the secondary text
+    const t1 = setTimeout(() => { 
       setPhase('done'); 
       onComplete(); 
-    }, 2600); // Total duration ~2.6s
-    return () => { clearTimeout(t1); clearTimeout(t2); };
+    }, 1600); // Total duration 1.6s
+    return () => { clearTimeout(t1); };
   }, [onComplete]);
 
   return (
@@ -59,101 +59,83 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
           }}
         >
           {/* Phase 1 — VŌGE Center Reveal with Fast Images INSIDE text */}
-          {phase === 'loading' && (
-            <motion.div 
-              className="pre-inner" 
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.4 }}
-            >
-              <div className="pre-letters" style={{ 
-                fontSize: '10vw', 
-                letterSpacing: '-0.05em', 
-                display: 'flex', 
-                alignItems: 'center',
-                gap: '0.1em'
-              }}>
+          <motion.div 
+            className="pre-inner" 
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.4 }}
+          >
+            <div className="pre-letters" style={{ 
+              fontSize: '10vw', 
+              letterSpacing: '-0.05em', 
+              display: 'flex', 
+              alignItems: 'center',
+              gap: '0.1em'
+            }}>
+              <motion.span 
+                className="pre-letter"
+                initial={{ y: 80, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.6, ease: [0.215, 0.61, 0.355, 1] }}
+              >
+                V
+              </motion.span>
+
+              {/* Image Flash Slot as the 'O' / Center Element */}
+              <motion.div 
+                className="pre-img-slot"
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 0.15, duration: 0.5 }}
+                style={{ 
+                  width: '8vw', 
+                  height: '8vw', 
+                  position: 'relative', 
+                  overflow: 'hidden',
+                  borderRadius: '50%', // Circle shape for the 'O'
+                  margin: '0 0.1em'
+                }}
+              >
+                {IMAGES.map((src, i) => (
+                  <img key={i} src={src} alt=""
+                    style={{ 
+                      position: 'absolute',
+                      inset: 0,
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      opacity: i === imgIdx ? 1 : 0 
+                    }}
+                  />
+                ))}
+              </motion.div>
+
+              {['G', 'E'].map((l, i) => (
                 <motion.span 
+                  key={l + i}
                   className="pre-letter"
                   initial={{ y: 80, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.6, ease: [0.215, 0.61, 0.355, 1] }}
-                >
-                  V
-                </motion.span>
-
-                {/* Image Flash Slot as the 'O' / Center Element */}
-                <motion.div 
-                  className="pre-img-slot"
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ delay: 0.15, duration: 0.5 }}
-                  style={{ 
-                    width: '8vw', 
-                    height: '8vw', 
-                    position: 'relative', 
-                    overflow: 'hidden',
-                    borderRadius: '50%', // Circle shape for the 'O'
-                    margin: '0 0.1em'
+                  transition={{ 
+                    delay: 0.2 + i * 0.05, 
+                    duration: 0.6, 
+                    ease: [0.215, 0.61, 0.355, 1] 
                   }}
                 >
-                  {IMAGES.map((src, i) => (
-                    <img key={i} src={src} alt=""
-                      style={{ 
-                        position: 'absolute',
-                        inset: 0,
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                        opacity: i === imgIdx ? 1 : 0 
-                      }}
-                    />
-                  ))}
-                </motion.div>
+                  {l}
+                </motion.span>
+              ))}
+            </div>
 
-                {['G', 'E'].map((l, i) => (
-                  <motion.span 
-                    key={l + i}
-                    className="pre-letter"
-                    initial={{ y: 80, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ 
-                      delay: 0.2 + i * 0.05, 
-                      duration: 0.6, 
-                      ease: [0.215, 0.61, 0.355, 1] 
-                    }}
-                  >
-                    {l}
-                  </motion.span>
-                ))}
-              </div>
-
-              {/* Progress Count */}
-              <motion.span 
-                className="pre-counter"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 0.6 }}
-                style={{ position: 'absolute', bottom: '10%', fontSize: '1.2rem' }}
-              >
-                {Math.min(count, 100)}%
-              </motion.span>
-            </motion.div>
-          )}
-
-          {/* Phase 2 — Final Transition Reveal */}
-          {(phase === 'reveal' || phase === 'done') && (
-            <motion.div className="pre-reveal">
-              <motion.span 
-                className="pre-big-word"
-                initial={{ y: 100, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: -100, opacity: 0 }}
-                transition={{ duration: 0.4, ease: "circOut" }}
-                style={{ fontSize: '15vw', fontWeight: 700 }}
-              >
-                VŌGE
-              </motion.span>
-            </motion.div>
-          )}
+            {/* Progress Count */}
+            <motion.span 
+              className="pre-counter"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.6 }}
+              style={{ position: 'absolute', bottom: '10%', fontSize: '1.2rem' }}
+            >
+              {Math.min(count, 100)}%
+            </motion.span>
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>
