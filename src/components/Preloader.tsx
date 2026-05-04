@@ -17,23 +17,20 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
   const [imgIdx, setImgIdx] = useState(0);
   const [phase, setPhase] = useState('loading'); // loading | reveal | done
 
-  // Balanced Counter tick (~1.6s to reach 100%)
+  // Synchronized Counter and Image Flash (100ms interval, exactly 16 ticks to hit 1600ms)
   useEffect(() => {
     const t = setInterval(() => {
+      // Advance Image
+      setImgIdx(i => (i + 1) % IMAGES.length);
+      
+      // Advance Counter (Target: ~100 over 16 ticks = ~6.25 per tick)
       setCount(c => {
-        if (c >= 100) { 
-          clearInterval(t); 
-          return 100; 
-        }
-        return c + Math.floor(Math.random() * 6) + 2; 
+        if (c >= 100) return 100;
+        const increment = Math.floor(Math.random() * 4) + 4; // 4 to 7 per tick
+        return Math.min(c + increment, 100);
       });
-    }, 35);
-    return () => clearInterval(t);
-  }, []);
-
-  // Professional Image Flash Speed (100ms for 'shimmer' effect)
-  useEffect(() => {
-    const t = setInterval(() => setImgIdx(i => (i + 1) % IMAGES.length), 100);
+    }, 100);
+    
     return () => clearInterval(t);
   }, []);
 
@@ -64,59 +61,73 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.4 }}
           >
+            {/* Chaotic Image Background Layer */}
+            <motion.div 
+              className="pre-img-background"
+              style={{
+                position: 'absolute',
+                inset: 0,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                zIndex: 0
+              }}
+            >
+              {IMAGES.map((src, i) => {
+                // Generate consistent "random" transforms for each image to look like scattered polaroids
+                const rotation = (i % 2 === 0 ? 1 : -1) * (5 + (i * 3));
+                const scale = 0.8 + (i * 0.05);
+                const xOffset = (i % 2 === 0 ? 1 : -1) * (i * 10);
+                
+                return (
+                  <motion.div
+                    key={i}
+                    style={{
+                      position: 'absolute',
+                      width: '30vw',
+                      height: '40vw',
+                      maxWidth: '400px',
+                      maxHeight: '500px',
+                      opacity: i === imgIdx ? 1 : 0, // Keep smooth toggle 
+                      transform: `translate(${xOffset}px, 0) rotate(${rotation}deg) scale(${scale})`,
+                      boxShadow: '0 20px 40px rgba(0,0,0,0.3)',
+                    }}
+                  >
+                    <img 
+                      src={src.replace('w=600&q=80', 'w=400&q=60')} 
+                      alt=""
+                      fetchPriority="high"
+                      style={{ 
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                      }}
+                    />
+                  </motion.div>
+                );
+              })}
+            </motion.div>
+
+            {/* Foreground Text Layer */}
             <div className="pre-letters" style={{ 
-              fontSize: '10vw', 
-              letterSpacing: '-0.05em', 
+              fontSize: '15vw', 
+              letterSpacing: '-0.02em', 
               display: 'flex', 
               alignItems: 'center',
-              gap: '0.1em'
+              position: 'relative',
+              zIndex: 1, // Keep text on top of images
+              color: '#fff',
+              fontWeight: 'bold',
+              textShadow: '0 10px 30px rgba(0,0,0,0.5)' // Ensure readability over photos
             }}>
-              <motion.span 
-                className="pre-letter"
-                initial={{ y: 80, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.6, ease: [0.215, 0.61, 0.355, 1] }}
-              >
-                V
-              </motion.span>
-
-              {/* Image Flash Slot as the 'O' / Center Element */}
-              <motion.div 
-                className="pre-img-slot"
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: 0.15, duration: 0.5 }}
-                style={{ 
-                  width: '8vw', 
-                  height: '8vw', 
-                  position: 'relative', 
-                  overflow: 'hidden',
-                  borderRadius: '50%', // Circle shape for the 'O'
-                  margin: '0 0.1em'
-                }}
-              >
-                {IMAGES.map((src, i) => (
-                  <img key={i} src={src} alt=""
-                    style={{ 
-                      position: 'absolute',
-                      inset: 0,
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                      opacity: i === imgIdx ? 1 : 0 
-                    }}
-                  />
-                ))}
-              </motion.div>
-
-              {['G', 'E'].map((l, i) => (
+              {['V', 'Ō', 'G', 'E'].map((l, i) => (
                 <motion.span 
                   key={l + i}
                   className="pre-letter"
                   initial={{ y: 80, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ 
-                    delay: 0.2 + i * 0.05, 
+                    delay: 0.1 + i * 0.08, 
                     duration: 0.6, 
                     ease: [0.215, 0.61, 0.355, 1] 
                   }}

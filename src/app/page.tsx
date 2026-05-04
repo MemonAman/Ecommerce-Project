@@ -77,8 +77,9 @@ export default function Home() {
         <div className="shopco-prod-grid">
           {products.slice(0, 4).map(p => (
             <Link href={`/product/${p.id}`} key={p.id} className="shopco-prod-card" style={{ textDecoration: 'none', color: 'inherit' }}>
-              <div className="shopco-prod-img-wrap">
-                <img src={p.img} alt={p.name} loading="lazy" />
+              <div className="shopco-prod-img-wrap hover-swap-wrap">
+                <img src={p.img} alt={p.name} className="main-img" loading="lazy" />
+                <img src={p.gallery && p.gallery.length > 1 ? p.gallery[1] : p.img} alt={`${p.name} alt`} className="hover-img" loading="lazy" />
               </div>
               <div className="shopco-prod-title">{p.name}</div>
               <div className="shopco-prod-rating">
@@ -106,8 +107,9 @@ export default function Home() {
         <div className="shopco-prod-grid">
           {products.slice(4, 8).map(p => (
             <Link href={`/product/${p.id}`} key={p.id} className="shopco-prod-card" style={{ textDecoration: 'none', color: 'inherit' }}>
-              <div className="shopco-prod-img-wrap">
-                <img src={p.img} alt={p.name} loading="lazy" />
+              <div className="shopco-prod-img-wrap hover-swap-wrap">
+                <img src={p.img} alt={p.name} className="main-img" loading="lazy" />
+                <img src={p.gallery && p.gallery.length > 1 ? p.gallery[1] : p.img} alt={`${p.name} alt`} className="hover-img" loading="lazy" />
               </div>
               <div className="shopco-prod-title">{p.name}</div>
               <div className="shopco-prod-rating">
