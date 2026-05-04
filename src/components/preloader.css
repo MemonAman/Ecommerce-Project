@@ -1,0 +1,44 @@
+.preloader {
+  position: fixed; inset: 0; z-index: 99999;
+  background: #0a0a0a;
+  display: flex; align-items: center; justify-content: center;
+}
+.pre-counter {
+  position: absolute; top: 50%; right: 48px;
+  transform: translateY(-50%);
+  font-size: 13px; letter-spacing: 0.15em;
+  color: rgba(255,255,255,0.4);
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-body);
+}
+.pre-letters {
+  display: flex; align-items: center;
+}
+.pre-letter {
+  font-family: var(--font-display);
+  font-size: clamp(80px, 12vw, 140px);
+  color: #fff; line-height: 1;
+  font-weight: 600;
+}
+.pre-img-slot {
+  width: 90px; height: 115px;
+  position: relative; overflow: hidden;
+  margin: 0 12px;
+  border-radius: 4px;
+}
+.pre-img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover;
+  transition: none;
+}
+.pre-reveal {
+  position: fixed; inset: 0;
+  background: #0a0a0a; /* VOGE page bg */
+  display: flex; align-items: center; justify-content: center;
+}
+.pre-big-word {
+  font-family: var(--font-display);
+  font-size: 18vw; 
+  color: #fff; /* Changed to white to fix dark text on dark background */
+  font-weight: 600;
+}

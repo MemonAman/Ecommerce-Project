@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ÉLÉVATION ARCHIVE | High-End Fashion</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@300;400;500;700&amp;family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .inner-glow {
+            box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.1);
+        }
+        .neumorphic-lift {
+            box-shadow: 4px 4px 10px rgba(0,0,0,0.3), -2px -2px 10px rgba(255,255,255,0.05);
+        }
+        .neumorphic-pressed:active {
+            box-shadow: inset 2px 2px 5px rgba(0,0,0,0.5), inset -1px -1px 5px rgba(255,255,255,0.05);
+        }
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #141313;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #353434;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "inverse-on-surface": "#313030",
+                      "inverse-surface": "#e5e2e1",
+                      "on-primary-container": "#7e7d7d",
+                      "primary-fixed-dim": "#c8c6c5",
+                      "on-secondary-fixed-variant": "#454747",
+                      "outline-variant": "#444748",
+                      "surface-container-low": "#1c1b1b",
+                      "on-secondary": "#2f3131",
+                      "tertiary-fixed-dim": "#e9c176",
+                      "surface": "#141313",
+                      "on-error": "#690005",
+                      "surface-container-high": "#2b2a2a",
+                      "error-container": "#93000a",
+                      "surface-container-lowest": "#0e0e0e",
+                      "primary-container": "#121212",
+                      "surface-variant": "#353434",
+                      "on-secondary-fixed": "#1a1c1c",
+                      "surface-dim": "#141313",
+                      "on-tertiary-fixed-variant": "#5d4201",
+                      "tertiary": "#e9c176",
+                      "surface-container-highest": "#353434",
+                      "on-primary": "#313030",
+                      "on-tertiary-fixed": "#261900",
+                      "secondary-fixed-dim": "#c6c6c7",
+                      "primary": "#c8c6c5",
+                      "on-secondary-container": "#b4b5b5",
+                      "on-error-container": "#ffdad6",
+                      "background": "#141313",
+                      "on-primary-fixed-variant": "#474646",
+                      "tertiary-container": "#1a1000",
+                      "on-surface": "#e5e2e1",
+                      "on-background": "#e5e2e1",
+                      "on-primary-fixed": "#1c1b1b",
+                      "secondary-container": "#454747",
+                      "surface-bright": "#3a3939",
+                      "error": "#ffb4ab",
+                      "secondary-fixed": "#e2e2e2",
+                      "on-tertiary": "#412d00",
+                      "primary-fixed": "#e5e2e1",
+                      "secondary": "#c6c6c7",
+                      "on-surface-variant": "#c4c7c7",
+                      "tertiary-fixed": "#ffdea5",
+                      "outline": "#8e9192",
+                      "inverse-primary": "#5f5e5e",
+                      "on-tertiary-container": "#997835",
+                      "surface-tint": "#c8c6c5",
+                      "surface-container": "#201f1f"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "container-max": "1440px",
+                      "section-gap": "160px",
+                      "base": "8px",
+                      "gutter": "32px",
+                      "margin-mobile": "24px",
+                      "margin-desktop": "80px"
+              },
+              "fontFamily": {
+                      "body-lg": ["Space Grotesk"],
+                      "body-md": ["Space Grotesk"],
+                      "headline-lg": ["Noto Serif"],
+                      "display-xl": ["Noto Serif"],
+                      "headline-md": ["Noto Serif"],
+                      "label-caps": ["Space Grotesk"]
+              },
+              "fontSize": {
+                      "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "headline-lg": ["48px", {"lineHeight": "1.2", "fontWeight": "400"}],
+                      "display-xl": ["84px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "400"}],
+                      "headline-md": ["32px", {"lineHeight": "1.3", "fontWeight": "400"}],
+                      "label-caps": ["12px", {"lineHeight": "1.0", "letterSpacing": "0.1em", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+      </script>
+</head>
+<body class="bg-background text-on-background selection:bg-tertiary selection:text-on-tertiary overflow-x-hidden">
+<!-- TopNavBar -->
+<nav class="bg-black/15 backdrop-blur-[30px] text-stone-100 fixed top-0 w-full z-50 border-b-[0.5px] border-white/10 inner-glow border-white/10 shadow-[4px_4px_10px_rgba(0,0,0,0.3),-2px_-2px_10px_rgba(255,255,255,0.05)] flex justify-between items-center px-12 h-20 w-full">
+<div class="text-2xl font-light tracking-[0.4em] text-white">ÉLÉVATION</div>
+<div class="hidden md:flex gap-12">
+<a class="font-['Noto_Serif'] uppercase tracking-[0.2em] text-[11px] font-medium text-white border-b border-white pb-1 hover:backdrop-blur-[40px] transition-all duration-700" href="#">Collections</a>
+<a class="font-['Noto_Serif'] uppercase tracking-[0.2em] text-[11px] font-medium text-stone-400 hover:text-white transition-colors duration-500 hover:backdrop-blur-[40px]" href="#">Runway</a>
+<a class="font-['Noto_Serif'] uppercase tracking-[0.2em] text-[11px] font-medium text-stone-400 hover:text-white transition-colors duration-500 hover:backdrop-blur-[40px]" href="#">Artisanship</a>
+<a class="font-['Noto_Serif'] uppercase tracking-[0.2em] text-[11px] font-medium text-stone-400 hover:text-white transition-colors duration-500 hover:backdrop-blur-[40px]" href="#">Bespoke</a>
+</div>
+<div class="flex items-center gap-6">
+<button class="material-symbols-outlined text-stone-100 hover:backdrop-blur-[40px] transition-all duration-700 scale-95 active:scale-90" data-icon="dark_mode">dark_mode</button>
+<button class="material-symbols-outlined text-stone-100 hover:backdrop-blur-[40px] transition-all duration-700 scale-95 active:scale-90" data-icon="shopping_bag">shopping_bag</button>
+</div>
+</nav>
+<!-- Hero Section -->
+<section class="relative h-screen w-full flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 z-0">
+<img class="w-full h-full object-cover opacity-60 scale-105" data-alt="dramatic wide shot of architectural fashion setting with harsh geometric shadows and a professional model in avant-garde structure" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3l95Z7rg0XIuwupclj1D3XDI8JY71Pn-s09BK0nK-RUTkRpOz4SbNmz-zps_XdrJdQQZ69zL44fqqY8L9z1gjpnBJgpJjtKpHZNYZFL6UtqVNZzAZE_4wbY21ydN1J6dffmFanyK97XbeUDIxjn5eZ0wlFxcbNyUINBotBoe8GGM6XLteWOb-_5nrIFoQ7eX2DygqBTu5uU5cy-slTiOSBchmO8MQqj3mIsNzA6cAWgfmJvf1OnaRtEvdCOQeTmpM17EK7XN0B03k"/>
+</div>
+<div class="relative z-10 text-center space-y-8 px-4">
+<h1 class="font-display-xl text-display-xl tracking-[0.1em] text-white opacity-90 drop-shadow-2xl">
+                ÉLÉVATION ARCHIVE
+            </h1>
+<p class="font-body-lg text-body-lg text-stone-300 max-w-xl mx-auto uppercase tracking-widest opacity-80">
+                A definitive collection of architectural footwear and technical tailoring.
+            </p>
+<div class="pt-8">
+<button class="bg-surface-container text-on-surface px-10 py-4 rounded-none font-label-caps text-label-caps neumorphic-lift neumorphic-pressed transition-all duration-500 uppercase">
+                    Explore Volume II
+                </button>
+</div>
+</div>
+<!-- 3D-Like Floating Detail -->
+<div class="absolute right-[10%] top-[60%] hidden xl:block z-20">
+<div class="bg-black/15 backdrop-blur-[30px] p-4 border-[0.5px] border-white/10 inner-glow rounded-xl shadow-2xl rotate-12 scale-110">
+<img class="w-64 h-80 object-cover rounded-lg" data-alt="studio product shot of a high-end minimalist sneaker with structured architectural elements and premium suede textures on white background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzUlMDZJBRrBg7v4GRIu55Gtu051-liWGuo9X-F_gGGkvU3NWYxt_-pxbCSFi_f-Ukom9mQmP9ZOfYAC6ONsaYxfs-7R-oS-RTqkTwEH0cxiRc6961K3BoN4zwASFX4aD-Lzu4neuGzOuS2I-OhUqhiDnzdC_NKRBV3zy-j5dsL6cZcubqVfhhrWkIefNE3U0m9stnQr-8Pzxd0LnnYhW2jmSXyFui_UvAbih74UHkHTgkyKAs_u5Izx9gQhVUyFk3tNYeq2OnhPm-"/>
+</div>
+</div>
+</section>
+<!-- Featured Collections Bento Grid -->
+<section class="max-w-[1440px] mx-auto px-12 py-40">
+<div class="mb-24 flex items-end justify-between border-b border-white/10 pb-12">
+<div class="space-y-4">
+<span class="font-label-caps text-label-caps text-tertiary uppercase">Curated selection</span>
+<h2 class="font-headline-lg text-headline-lg text-white">COLLECTIONS 01-04</h2>
+</div>
+<p class="font-body-md text-body-md text-stone-400 max-w-sm">
+                Each piece is a dialogue between traditional craftsmanship and future-forward silhouettes.
+            </p>
+</div>
+<div class="grid grid-cols-12 gap-8">
+<!-- Glassmorphic Card 1 -->
+<div class="col-span-12 md:col-span-7 relative group overflow-hidden bg-black/15 backdrop-blur-[30px] border-[0.5px] border-white/10 inner-glow aspect-[16/9]">
+<img class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:scale-110 transition-transform duration-1000" data-alt="luxurious long wool coat in charcoal grey hanging in a minimalist brutalist concrete space with soft morning light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtW32T1jdDPc6ejvwLN_IAhMBQhZtth5zyLJ_2zHFC1ZS6p62IUtiD2tVpq4WJ-otuC2-azdBm5fL3ASKyvUB4jyXWXx3jSmiCt6ChTizPoAOd_r8o3GtkiIja6_q0MuzgaL6eo21Uv9yvqNXYkVhA6O6SHRBREYmqpqOsDj1RLof5nD4RzcbX33sSfr0aHodt1u7VrrnvwFVUTB8EbCNmIpSfyvRDcZCo4oaUitwav8XFThWZFSEryAXgj816_VXxEOAcoS4wz-Er"/>
+<div class="absolute bottom-12 left-12 space-y-2">
+<span class="bg-tertiary/20 text-tertiary px-3 py-1 text-[10px] uppercase font-bold tracking-widest rounded-full backdrop-blur-md border border-tertiary/30">New Arrival</span>
+<h3 class="font-headline-md text-headline-md text-white">The Structured Coat</h3>
+<button class="font-label-caps text-label-caps text-white border-b border-white mt-4 inline-block opacity-0 group-hover:opacity-100 transition-opacity">View Details</button>
+</div>
+</div>
+<!-- Glassmorphic Card 2 -->
+<div class="col-span-12 md:col-span-5 relative group overflow-hidden bg-black/15 backdrop-blur-[30px] border-[0.5px] border-white/10 inner-glow aspect-square">
+<img class="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:scale-110 transition-transform duration-1000" data-alt="close-up detail of textured technical fabric with fine stitching and metallic hardware in a professional studio setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuALEEtjI9wN-kqYzxCWali_WpudpCN9d0WOKdjlYhSa_PEteLDezcXwsWRPyWzvaZ3uLnYXPnsqkbkIJk6bbu159jmn7EU2a66bTqqizPbdrTXORqM_mZbPM2SOMaSisTE9WpygQBvjVF10TkY4SU_FfjReLyyggkugBs7Ksktesx2Mg-6QO8CPEpp7_PmWLOe8Fy3Fdz5c0EE1KDAvZ0La--xVPiWUDAlWH4UbJ1p0rkOP6eGvijxwgl3-RVtiQtp5wt_8iNv4iy2-"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<h3 class="font-headline-md text-headline-md text-white text-center px-12">Monolith Footwear</h3>
+</div>
+</div>
+<!-- Glassmorphic Card 3 -->
+<div class="col-span-12 md:col-span-4 relative group overflow-hidden bg-black/15 backdrop-blur-[30px] border-[0.5px] border-white/10 inner-glow aspect-square">
+<img class="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:scale-110 transition-transform duration-1000" data-alt="high fashion accessory shot of a structured leather bag on a dark reflective surface with dramatic spotlighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEkrT3WUqPHgJktVZbZHtAgnMt5HSnEy4K-IMwTM8WoaAsmUpH8Lf9NPaGTjVK8huOIPy0h2cW0DTxkoph1hUskpxmxWcSLJ2z-mxMDXb9XUG367Jil0ufLhkN5GSlmLrtPsNmMSNMw0vC0K_80sXYhkgoVk8Hcve7rn1A71obX6BP805WhGINnPOK0JQiTszSrCcVO9yMfdyuoCHXPd77QtGEhGVoxUHvqx2JJS38lkMp13HZIwlLZCzKql2RmgIzmUI9gJ3QmZhZ"/>
+<div class="absolute bottom-12 left-12">
+<h3 class="font-headline-md text-headline-md text-white">Artisanship</h3>
+</div>
+</div>
+<!-- Glassmorphic Card 4 -->
+<div class="col-span-12 md:col-span-8 relative group overflow-hidden bg-black/15 backdrop-blur-[30px] border-[0.5px] border-white/10 inner-glow">
+<img class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:scale-110 transition-transform duration-1000" data-alt="wide shot of high-end boutique interior with rows of minimalist clothing racks and soft architectural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuANfhvO-5qZcvdGOsgn4T2-CWC0L4XvTcYTKz0MmL9raU6Em3y9UbHzuZ4YCCNYLu8OUULcT1aDtHEuj35NI8rnS4DsToMAA26BvV4U4gqDIBKiaGHdPPR74WL6Pmvy7RInbmXee_qwuq2zrEbylLDZmp2baF86l6prer3K3dPd7w9l-Kn5dgOOGC493e_RvplAxVDELcOwEnqRnHp6IbRKQctscJAKjf2NuzakivoB3nyG8F-qS2Cw02hBsMl8pcIYC_cyiKzJeRvf"/>
+<div class="absolute top-12 left-12 space-y-2">
+<h3 class="font-headline-md text-headline-md text-white">Spring/Summer '24</h3>
+<p class="font-body-md text-body-md text-stone-300">The Obsidian Series</p>
+</div>
+</div>
+</div>
+</section>
+<!-- THE ARCHIVE CURATION (AI-Recommendations) -->
+<section class="bg-surface-container-lowest py-40 border-y border-white/5">
+<div class="max-w-[1440px] mx-auto px-12">
+<div class="text-center space-y-4 mb-24">
+<span class="font-label-caps text-label-caps text-stone-500 uppercase tracking-[0.3em]">The Archive Curation</span>
+<h2 class="font-headline-lg text-headline-lg text-white">REFINED SUGGESTIONS</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-12">
+<!-- Item 1 -->
+<div class="space-y-6">
+<div class="aspect-[3/4] overflow-hidden bg-surface-container-high relative group">
+<img class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" data-alt="red high-performance minimalist sneaker against dark background with sharp edge lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDC0IyhQtJNtenUEVEt3_Bvm1VYu589QbFcKjHmoBOV9SBz04QrUw0wBA5XBp2Knxzz559S0BCdIf5oxG8Ej1A79FCReukK8Vg8T3dah_qWMHyGTyRgypGPQDVZKlLt8C4cVnA2RIPXmtMTo_qufWZRADSk2AQuYvXCJMc198KKSzdP_MYiShTCHFuCbD2nXioTOi-EQwdl8HnZQYEjG27xu6WEaBam-i5WJSiF1zxSsifnTIaj6KOl-ZsU3cAmuizcH0-QPqdpDejt"/>
+<button class="absolute bottom-6 right-6 w-12 h-12 rounded-full bg-white text-black flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between items-center">
+<h4 class="font-body-md text-body-md text-white font-medium">Kinetic High-Top</h4>
+<span class="font-body-md text-body-md text-stone-500">$840</span>
+</div>
+<p class="font-label-caps text-[10px] text-stone-600 uppercase">Black Leather / Technical Mesh</p>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="space-y-6">
+<div class="aspect-[3/4] overflow-hidden bg-surface-container-high relative group">
+<img class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" data-alt="minimalist white linen shirt with impeccable tailoring on a ghost mannequin in a bright white studio" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_XKI9xE8EHlkUQt-1xvb75Jp8atlpbs04Sfh83io2bvs3Iw7pj9sO6JhwIjSBJjbP5FU3U_caIbNGg93MuQpS4MmigrFcvIQBV7M95qcpZtr_s17hRm-__bOjjLBzNoIJ4Hh_sTLjPMlsU-wPiPT53nWBATD1o06Z680oJT0xPjV6rPXSkyjBd1w7PJ-A4YY8V0LTIXTp5dn30rBXvtSzOjxgkl_7rMewGhSqSXsi7o8jZnJwTF3XcpX2I4P6Yyb4X4bHqONlal4R"/>
+<button class="absolute bottom-6 right-6 w-12 h-12 rounded-full bg-white text-black flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between items-center">
+<h4 class="font-body-md text-body-md text-white font-medium">Linen Shell Shirt</h4>
+<span class="font-body-md text-body-md text-stone-500">$320</span>
+</div>
+<p class="font-label-caps text-[10px] text-stone-600 uppercase">Organic Bone / Structured Fit</p>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="space-y-6">
+<div class="aspect-[3/4] overflow-hidden bg-surface-container-high relative group">
+<img class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" data-alt="classic leather chelsea boots with a modern square toe and high-gloss finish on a concrete pedestal" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDU-BglHYFHhOCFgjMrEIUq1SIelviN54tJcWHitcvHji3SSxRuQ9JkLPN7pDi54KPjcRqqvla0U6gOc5yBuKUDxUQBkgIHStKTlhTXyI51ijAWu1q-SuCk2tLbhAEZSCFQrNLKWbN6DfQA4Y3uYGGsNKN-Hqxt7uv-ERQvDEQ50EDFXSXyO6QxSu3H-_i2izdCRN1Pjwoa8UhI2KG9PiH9RDnXV5dd5aFhYlRx4xAJgtaKzQUG9knHdah6KBJc_qiyzt84VMwv1_2l"/>
+<button class="absolute bottom-6 right-6 w-12 h-12 rounded-full bg-white text-black flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between items-center">
+<h4 class="font-body-md text-body-md text-white font-medium">Terra Chelsea Boot</h4>
+<span class="font-body-md text-body-md text-stone-500">$950</span>
+</div>
+<p class="font-label-caps text-[10px] text-stone-600 uppercase">Vitello Calfskin / Nero</p>
+</div>
+</div>
+<!-- Item 4 -->
+<div class="space-y-6">
+<div class="aspect-[3/4] overflow-hidden bg-surface-container-high relative group">
+<img class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" data-alt="premium minimalist black t-shirt with heavy weight fabric and oversized fit hanging in a boutique" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVMJC-G_bT7pr1mnamSlX1lSOLrozINlIkFCNCswziJ6rQwJKOy5xpwVvkNcLDg3j3hvhEmMOa6P0hbE5o1IbZI3-nWCeSIs5eCHaow7yCMhhqSamEVO2kJCsmmkSXC36EoxD118qBEtqRbvT_vJZ0zizmscEutocyIkDuLhaQqbeRI5OXPFD8qZYWq2qjsjkl2NcZ6Rhcq3rRpL-qojJdkBVG1qPANKt9QjC9nbJaoB09n-w8-jT4QZDW4T833CrrzJRR8vASNhsB"/>
+<button class="absolute bottom-6 right-6 w-12 h-12 rounded-full bg-white text-black flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between items-center">
+<h4 class="font-body-md text-body-md text-white font-medium">Heavyweight Tee</h4>
+<span class="font-body-md text-body-md text-stone-500">$180</span>
+</div>
+<p class="font-label-caps text-[10px] text-stone-600 uppercase">300GSM Cotton / Obsidian</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Bespoke Invitation Section -->
+<section class="relative py-60 flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0">
+<img class="w-full h-full object-cover opacity-30" data-alt="atmospheric studio shot of fashion designer working with textiles and drafting tools on a dark wooden table" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC73VoR-01h3Fi9fNqE_EGDMwrqthz9i0KznCtHVU7VUpb_W-B7n371A0asa8pnJpA4tUIjLeW3w2brV0dyqA4ndrEiIkm_iesxmJi5Awobb6vD9TlnaLZ84xXL8Mx4kn64Fzh4WxRQlk8zF5NrmsUvwswDSamfQfIzWL8FKfBqv_f748Ts4CBybjSWDpWVleUlQZJGxwx4OM4u35-mD7XJQ7YF7aWSpWm9TbAWXnlYlvpn-oY6e0q3xOiOtDSMzT5Q84SsMKJYOqE8"/>
+<div class="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background"></div>
+</div>
+<div class="relative z-10 max-w-4xl text-center px-12">
+<h2 class="font-display-xl text-headline-lg md:text-display-xl text-white mb-12">UNCOMPROMISING PRECISION</h2>
+<p class="font-body-lg text-body-lg text-stone-400 mb-16 leading-relaxed">
+                Discover the art of Bespoke. Each garment is meticulously drafted to your unique profile, utilizing the world's most exclusive mills and hand-finished in our London atelier.
+            </p>
+<button class="bg-transparent border border-white text-white px-12 py-5 font-label-caps text-label-caps hover:bg-white hover:text-black transition-all duration-500 tracking-[0.3em] uppercase">
+                Schedule Consultation
+            </button>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-[#121212] w-full pt-40 pb-12 px-12 border-t border-white/5">
+<div class="grid grid-cols-12 gap-8 max-w-[1440px] mx-auto">
+<div class="col-span-12 lg:col-span-4 space-y-12">
+<div class="text-lg font-light tracking-[0.3em] text-stone-300">ÉLÉVATION</div>
+<div class="space-y-4">
+<p class="font-['Noto_Serif'] text-[10px] tracking-widest uppercase text-stone-500">Subscribe to the Archive</p>
+<div class="flex border-b border-stone-800 pb-2 max-w-xs">
+<input class="bg-transparent border-none focus:ring-0 text-[10px] tracking-widest text-white w-full uppercase" placeholder="YOUR EMAIL" type="email"/>
+<button class="material-symbols-outlined text-stone-500 text-sm" data-icon="east">east</button>
+</div>
+</div>
+</div>
+<div class="col-span-6 lg:col-span-2 space-y-6">
+<h5 class="font-['Noto_Serif'] text-[10px] tracking-widest uppercase text-stone-300">Collections</h5>
+<ul class="space-y-4">
+<li><a class="font-['Noto_Serif'] text-[10px] tracking-widest uppercase text-stone-600 hover:text-stone-200 transition-colors duration-500" href="#">Footwear</a></li>
+<li><a class="font-['Noto_Serif'] text-[10px] tracking-widest uppercase text-stone-600 hover:text-stone-200 transition-colors duration-500" href="#">Outerwear</a></li>
+<li><a class="font-['Noto_Serif'] text-[10px] tracking-widest uppercase text-stone-600 hover:text-stone-200 transition-colors duration-500" href="#">Essentials</a></li>
+</ul>
+</div>
+<div class="col-span-6 lg:col-span-2 space-y-6">
+<h5 class="font-['Noto_Serif'] text-[10px] tracking-widest uppercase text-stone-300">Brand</h5>
+<ul class="space-y-4">
+<li><a class="font-['Noto_Serif'] text-[10px] tracking-widest uppercase text-stone-600 hover:text-stone-200 transition-colors duration-500" href="#">Sustainability</a></li>
+<li><a class="font-['Noto_Serif'] text-[10px] tracking-widest uppercase text-stone-600 hover:text-stone-200 transition-colors duration-500" href="#">Contact</a></li>
+<li><a class="font-['Noto_Serif'] text-[10px] tracking-widest uppercase text-stone-600 hover:text-stone-200 transition-colors duration-500" href="#">Privacy Policy</a></li>
+</ul>
+</div>
+<div class="col-span-12 lg:col-span-4 lg:text-right space-y-6">
+<h5 class="font-['Noto_Serif'] text-[10px] tracking-widest uppercase text-stone-300">Global Offices</h5>
+<p class="font-['Noto_Serif'] text-[10px] tracking-widest uppercase text-stone-600 leading-loose">
+                    London / Paris / Tokyo / New York<br/>
+                    Direct Inquiries: studio@elevationarchive.com
+                </p>
+<div class="flex lg:justify-end gap-6 pt-4">
+<a class="material-symbols-outlined text-stone-500 text-lg hover:text-white" data-icon="link" href="#">link</a>
+<a class="material-symbols-outlined text-stone-500 text-lg hover:text-white" data-icon="share" href="#">share</a>
+</div>
+</div>
+</div>
+<div class="max-w-[1440px] mx-auto mt-40 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
+<span class="font-['Noto_Serif'] text-[10px] tracking-widest uppercase text-stone-500">© 2024 ÉLÉVATION ARCHIVE. ALL RIGHTS RESERVED.</span>
+<div class="flex gap-8">
+<a class="font-['Noto_Serif'] text-[10px] tracking-widest uppercase text-stone-600 hover:text-stone-200 transition-colors" href="#">Instagram</a>
+<a class="font-['Noto_Serif'] text-[10px] tracking-widest uppercase text-stone-600 hover:text-stone-200 transition-colors" href="#">Vimeo</a>
+</div>
+</div>
+</footer>
+</body></html>
