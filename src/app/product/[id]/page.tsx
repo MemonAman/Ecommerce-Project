@@ -2,19 +2,37 @@
 
 import { useState } from 'react';
 import { useParams } from 'next/navigation';
-import { products } from '@/data/products';
 import { useCart } from '@/context/CartContext';
 
 export default function ProductDetail() {
   const { addItem } = useCart();
   const params = useParams();
-  const id = parseInt(params.id as string);
-  const currentProduct = products.find(p => p.id === id);
-
+  const [currentProduct, setCurrentProduct] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
   const [qty, setQty] = useState(1);
-  const [selectedSize, setSelectedSize] = useState(currentProduct?.sizes[0] || '');
-  const [selectedColor, setSelectedColor] = useState(currentProduct?.colors[0] || '');
+  const [selectedSize, setSelectedSize] = useState('');
+  const [selectedColor, setSelectedColor] = useState('');
 
+  useEffect(() => {
+    if (params.id) {
+      fetch(`/api/products/${params.id}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data && !data.message) {
+            setCurrentProduct(data);
+            setSelectedSize(data.sizes[0] || '');
+            setSelectedColor(data.colors[0] || '');
+          }
+          setLoading(false);
+        })
+        .catch(err => {
+          console.error('Error fetching product:', err);
+          setLoading(false);
+        });
+    }
+  }, [params.id]);
+
+  if (loading) return <div style={{padding: '100px', textAlign: 'center', fontSize: '20px'}}>Loading Product Details...</div>;
   if (!currentProduct) return <div style={{padding: '100px', textAlign: 'center'}}>Product not found</div>;
 
   return (

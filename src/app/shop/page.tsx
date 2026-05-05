@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, Suspense } from 'react';
-import { products } from '@/data/products';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 
@@ -9,12 +8,26 @@ function ShopContent() {
   const searchParams = useSearchParams();
   const catParam = searchParams.get('cat');
 
+  const [dbProducts, setDbProducts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
   const [filterCat, setFilterCat] = useState(catParam || 'all');
   const [filterSize, setFilterSize] = useState('');
   const [maxPrice, setMaxPrice] = useState(500);
   const [sort, setSort] = useState('featured');
 
-  // Update filter when URL changes (e.g. clicking Nav links)
+  useEffect(() => {
+    fetch('/api/products')
+      .then(res => res.json())
+      .then(data => {
+        setDbProducts(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error('Error fetching products:', err);
+        setLoading(false);
+      });
+  }, []);
+
   useEffect(() => {
     if (catParam) {
       setFilterCat(catParam);
@@ -23,7 +36,11 @@ function ShopContent() {
     }
   }, [catParam]);
 
-  let filtered = products.filter(p => {
+  if (loading) {
+    return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '60vh', fontSize: '20px' }}>Loading Collection...</div>;
+  }
+
+  let filtered = dbProducts.filter(p => {
     // Handle special tags
     if (filterCat === 'sale') {
       if (p.tag.toLowerCase() !== 'sale') return false;

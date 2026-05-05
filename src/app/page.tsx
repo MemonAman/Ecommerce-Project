@@ -1,10 +1,30 @@
 "use client";
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { products } from '@/data/products';
 import { useCart } from '@/context/CartContext';
 
 export default function Home() {
+  const [products, setProducts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('/api/products')
+      .then(res => res.json())
+      .then(data => {
+        setProducts(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error('Error fetching products:', err);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return <div className="loading-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', fontSize: '24px' }}>Loading VŌGE...</div>;
+  }
+
   const trending = products.filter(p => p.tag).slice(0, 4);
 
   return (
