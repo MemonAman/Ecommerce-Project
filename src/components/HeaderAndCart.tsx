@@ -7,6 +7,8 @@ import { Toaster } from 'react-hot-toast';
 
 export default function HeaderAndCart() {
   const { cart, isCartOpen, toggleCart, totalItems, totalPrice, updateQty, removeItem } = useCart();
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
   return (
     <>
       <Toaster position="bottom-right" toastOptions={{
@@ -27,13 +29,18 @@ export default function HeaderAndCart() {
 
     <header className="site-header">
       <nav className="main-nav">
+        <button className="mobile-menu-btn" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            {isMenuOpen ? <><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></> : <><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></>}
+          </svg>
+        </button>
         <Link href="/" className="nav-logo">VŌGE</Link>
         
-        <div className="nav-links">
-          <Link href="/shop?cat=man" className="nav-link">Man</Link>
-          <Link href="/shop?cat=woman" className="nav-link">Woman</Link>
-          <Link href="/shop?cat=shoes" className="nav-link">Shoes</Link>
-          <Link href="/shop?cat=brands" className="nav-link">Brands</Link>
+        <div className={`nav-links ${isMenuOpen ? 'mobile-open' : ''}`}>
+          <Link href="/shop?cat=man" className="nav-link" onClick={() => setIsMenuOpen(false)}>Man</Link>
+          <Link href="/shop?cat=woman" className="nav-link" onClick={() => setIsMenuOpen(false)}>Woman</Link>
+          <Link href="/shop?cat=shoes" className="nav-link" onClick={() => setIsMenuOpen(false)}>Shoes</Link>
+          <Link href="/shop?cat=brands" className="nav-link" onClick={() => setIsMenuOpen(false)}>Brands</Link>
         </div>
 
         <div className="nav-search-container">

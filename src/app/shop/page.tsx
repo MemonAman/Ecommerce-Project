@@ -32,8 +32,16 @@ function ShopContent() {
     } else if (filterCat === 'brands') {
       // Show all products when 'Brands' is clicked
       return true;
-    } else if (filterCat !== 'all' && p.cat.toLowerCase() !== filterCat.toLowerCase()) {
-      return false;
+    } else if (filterCat !== 'all') {
+      if (['man', 'woman'].includes(filterCat.toLowerCase())) {
+        if (p.gender !== filterCat.toLowerCase() && p.gender !== 'unisex') return false;
+      } else if (filterCat === 'shoes') {
+        if (p.cat.toLowerCase() !== 'sneakers' && p.cat.toLowerCase() !== 'shoes') return false;
+      } else if (['casual', 'formal', 'party', 'gym'].includes(filterCat.toLowerCase())) {
+        if (p.style?.toLowerCase() !== filterCat.toLowerCase()) return false;
+      } else if (p.cat.toLowerCase() !== filterCat.toLowerCase()) {
+        return false;
+      }
     }
 
     if (filterSize && !p.sizes.includes(filterSize)) return false;
