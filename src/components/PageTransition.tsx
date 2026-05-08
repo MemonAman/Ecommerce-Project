@@ -1,52 +1,47 @@
 "use client";
 
-import { useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import Preloader from './Preloader';
 
 export default function PageTransition({ children }: { children: React.ReactNode }) {
-  const [ready, setReady] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [removePreloader, setRemovePreloader] = useState(false);
 
-  // We temporarily disabled the sessionStorage check so you can see the animation on every refresh!
-  /*
+  // We keep the animation on every refresh for development, 
+  // but we can easily add sessionStorage check here later.
   useEffect(() => {
+    // If you want it only once per session, uncomment below:
+    /*
     const hasPlayed = sessionStorage.getItem('introPlayed');
     if (hasPlayed) {
-      setReady(true);
+      setLoading(false);
       setRemovePreloader(true);
     }
+    */
   }, []);
-  */
+
+  const handleComplete = () => {
+    setLoading(false);
+    // sessionStorage.setItem('introPlayed', 'true');
+    setTimeout(() => setRemovePreloader(true), 1000); // Small buffer for exit animation
+  };
 
   return (
-    <>
-      {!removePreloader && (
-        <Preloader onComplete={() => {
-          // Force scroll to top before revealing
-          window.scrollTo(0, 0);
-          
-          // Trigger the page to push up
-          setReady(true);
-          
-          // Wait for the Preloader's 0.8s exit animation to complete before removing it from DOM
-          setTimeout(() => setRemovePreloader(true), 1000);
-        }} />
-      )}
-      
-      <motion.div 
-        initial={{ y: "100vh" }}
-        animate={{ y: ready ? 0 : "100vh" }}
-        transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
-        style={{ 
-          position: 'relative', 
-          zIndex: 1, 
-          backgroundColor: '#F2F0F1', // Match theme background so no black gaps appear
-          minHeight: '100vh' 
-        }}
+    <div style={{ position: 'relative', backgroundColor: '#F2F0F1', minHeight: '100vh' }}>
+      <AnimatePresence mode="wait">
+        {!removePreloader && (
+          <Preloader key="preloader" onComplete={handleComplete} />
+        )}
+      </AnimatePresence>
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: loading ? 0 : 1 }}
+        transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
       >
         {children}
       </motion.div>
-    </>
+    </div>
   );
 }

@@ -4,11 +4,13 @@ import { useCart } from "@/context/CartContext";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 
 export default function CartPage() {
   const { cart, updateQty, removeItem, totalPrice } = useCart();
   const [mounted, setMounted] = useState(false);
   const router = useRouter();
+  const { data: session } = useSession();
 
   useEffect(() => {
     setMounted(true);
@@ -16,7 +18,19 @@ export default function CartPage() {
 
   if (!mounted) return null;
 
+  const handleCheckout = () => {
+    if (!session) {
+      // If guest, redirect to signin with a callback to return to cart
+      router.push('/auth/signin?callbackUrl=/cart');
+    } else {
+      // If logged in, proceed (for now just an alert or a real checkout page)
+      alert('Proceeding to Secure Checkout...');
+      // router.push('/checkout'); 
+    }
+  };
+
   const discount = totalPrice * 0.2; // 20% discount example
+// ... (omitting lines for brevity, but I will provide full block in ReplacementContent)
   const delivery = 15;
   const finalTotal = totalPrice - discount + delivery;
 
@@ -100,7 +114,7 @@ export default function CartPage() {
 
             <button 
               className="shopco-checkout-btn-big" 
-              onClick={() => alert('Proceeding to checkout stripe/paypal...')}
+              onClick={handleCheckout}
             >
               Go to Checkout
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>

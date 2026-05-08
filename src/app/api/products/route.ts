@@ -5,7 +5,7 @@ import Product from '@/models/Product';
 export async function GET() {
   try {
     await dbConnect();
-    const products = await Product.find({}).sort({ createdAt: -1 });
+    const products = await Product.find({}).sort({ id: 1 });
     return NextResponse.json(products);
   } catch (error: any) {
     return NextResponse.json({ message: 'Error fetching products', error: error.message }, { status: 500 });

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useCart } from '@/context/CartContext';
+import { motion } from 'framer-motion';
 
 export default function Home() {
   const [products, setProducts] = useState<any[]>([]);
@@ -12,7 +13,13 @@ export default function Home() {
     fetch('/api/products')
       .then(res => res.json())
       .then(data => {
-        setProducts(data);
+        console.log('Fetched products:', data);
+        if (Array.isArray(data)) {
+          setProducts(data);
+        } else {
+          console.error('Data is not an array:', data);
+          setProducts([]);
+        }
         setLoading(false);
       })
       .catch(err => {
@@ -33,11 +40,36 @@ export default function Home() {
       <div className="new-hero">
         <div className="new-hero-container">
           <div className="new-hero-left">
-            <h1 className="new-hero-title">FIND CLOTHES<br />THAT MATCHES<br />YOUR STYLE</h1>
-            <p className="new-hero-sub">Browse through our diverse range of meticulously crafted garments, designed to bring out your individuality and cater to your sense of style.</p>
-            <Link href="/shop"><button className="new-btn-dark">Shop Now</button></Link>
+            <motion.h1 
+              className="new-hero-title"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+            >
+              FIND CLOTHES<br />THAT MATCHES<br />YOUR STYLE
+            </motion.h1>
+            <motion.p 
+              className="new-hero-sub"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
+            >
+              Browse through our diverse range of meticulously crafted garments, designed to bring out your individuality and cater to your sense of style.
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
+            >
+              <Link href="/shop"><button className="new-btn-dark">Shop Now</button></Link>
+            </motion.div>
 
-            <div className="new-hero-stats">
+            <motion.div 
+              className="new-hero-stats"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 0.8 }}
+            >
               <div className="new-stat">
                 <span className="new-stat-num">200+</span>
                 <span className="new-stat-label">International Brands</span>
@@ -52,7 +84,7 @@ export default function Home() {
                 <span className="new-stat-num">30,000+</span>
                 <span className="new-stat-label">Happy Customers</span>
               </div>
-            </div>
+            </motion.div>
           </div>
           <div className="new-hero-right">
             <svg className="star-small" viewBox="0 0 100 100" fill="black"><path d="M50 0 C50 50 0 50 0 50 C50 50 50 100 50 100 C50 50 100 50 100 50 C50 50 50 0 50 0 Z" /></svg>
@@ -95,24 +127,33 @@ export default function Home() {
       <div className="shopco-section">
         <h2 className="shopco-section-title">NEW ARRIVALS</h2>
         <div className="shopco-prod-grid">
-          {products.slice(0, 4).map(p => (
-            <Link href={`/product/${p.id}`} key={p.id} className="shopco-prod-card" style={{ textDecoration: 'none', color: 'inherit' }}>
-              <div className="shopco-prod-img-wrap hover-swap-wrap">
-                <img src={p.img} alt={p.name} className="main-img" loading="lazy" />
-                <img src={p.gallery && p.gallery.length > 1 ? p.gallery[1] : p.img} alt={`${p.name} alt`} className="hover-img" loading="lazy" />
-              </div>
-              <div className="shopco-prod-title">{p.name}</div>
-              <div className="shopco-prod-rating">
-                <span className="stars">{'★'.repeat(Math.round(p.rating))}</span>
-                <span className="score">{p.rating}/5</span>
-              </div>
-              <div className="shopco-prod-price-row">
-                <span className="shopco-prod-price">${p.price}</span>
-                {p.orig && <span className="shopco-prod-orig">${p.orig}</span>}
-                {p.orig && <span className="shopco-prod-discount">-{Math.round((1 - p.price / p.orig) * 100)}%</span>}
-              </div>
-            </Link>
-          ))}
+          {products.length > 0 ? (
+            products.slice(0, 4).map((p, i) => (
+              <Link 
+                href={`/product/${p.id || p._id || i}`} 
+                key={p._id || p.id || i} 
+                className="shopco-prod-card" 
+                style={{ textDecoration: 'none', color: 'inherit' }}
+              >
+                <div className="shopco-prod-img-wrap hover-swap-wrap">
+                  <img src={p.img || '/placeholder.png'} alt={p.name} className="main-img" loading="lazy" />
+                  <img src={(p.gallery && p.gallery.length > 1) ? p.gallery[1] : (p.img || '/placeholder.png')} alt={`${p.name} alt`} className="hover-img" loading="lazy" />
+                </div>
+                <div className="shopco-prod-title">{p.name || 'Unnamed Product'}</div>
+                <div className="shopco-prod-rating">
+                  <span className="stars">{'★'.repeat(Math.round(p.rating || 0))}</span>
+                  <span className="score">{p.rating || 0}/5</span>
+                </div>
+                <div className="shopco-prod-price-row">
+                  <span className="shopco-prod-price">${p.price || 0}</span>
+                  {p.orig && <span className="shopco-prod-orig">${p.orig}</span>}
+                  {p.orig && p.price && <span className="shopco-prod-discount">-{Math.round((1 - p.price / p.orig) * 100)}%</span>}
+                </div>
+              </Link>
+            ))
+          ) : (
+            <div style={{gridColumn: '1/-1', textAlign: 'center', padding: '40px', color: '#666'}}>No products found. Please seed the database.</div>
+          )}
         </div>
         <Link href="/shop" style={{ textDecoration: 'none' }}>
           <button className="shopco-view-all">View All</button>
@@ -125,24 +166,33 @@ export default function Home() {
       <div className="shopco-section">
         <h2 className="shopco-section-title">TOP SELLING</h2>
         <div className="shopco-prod-grid">
-          {products.slice(4, 8).map(p => (
-            <Link href={`/product/${p.id}`} key={p.id} className="shopco-prod-card" style={{ textDecoration: 'none', color: 'inherit' }}>
-              <div className="shopco-prod-img-wrap hover-swap-wrap">
-                <img src={p.img} alt={p.name} className="main-img" loading="lazy" />
-                <img src={p.gallery && p.gallery.length > 1 ? p.gallery[1] : p.img} alt={`${p.name} alt`} className="hover-img" loading="lazy" />
-              </div>
-              <div className="shopco-prod-title">{p.name}</div>
-              <div className="shopco-prod-rating">
-                <span className="stars">{'★'.repeat(Math.round(p.rating))}</span>
-                <span className="score">{p.rating}/5</span>
-              </div>
-              <div className="shopco-prod-price-row">
-                <span className="shopco-prod-price">${p.price}</span>
-                {p.orig && <span className="shopco-prod-orig">${p.orig}</span>}
-                {p.orig && <span className="shopco-prod-discount">-{Math.round((1 - p.price / p.orig) * 100)}%</span>}
-              </div>
-            </Link>
-          ))}
+          {products.length > 4 ? (
+            products.slice(4, 8).map((p, i) => (
+              <Link 
+                href={`/product/${p.id || p._id || i}`} 
+                key={p._id || p.id || i} 
+                className="shopco-prod-card" 
+                style={{ textDecoration: 'none', color: 'inherit' }}
+              >
+                <div className="shopco-prod-img-wrap hover-swap-wrap">
+                  <img src={p.img || '/placeholder.png'} alt={p.name} className="main-img" loading="lazy" />
+                  <img src={(p.gallery && p.gallery.length > 1) ? p.gallery[1] : (p.img || '/placeholder.png')} alt={`${p.name} alt`} className="hover-img" loading="lazy" />
+                </div>
+                <div className="shopco-prod-title">{p.name || 'Unnamed Product'}</div>
+                <div className="shopco-prod-rating">
+                  <span className="stars">{'★'.repeat(Math.round(p.rating || 0))}</span>
+                  <span className="score">{p.rating || 0}/5</span>
+                </div>
+                <div className="shopco-prod-price-row">
+                  <span className="shopco-prod-price">${p.price || 0}</span>
+                  {p.orig && <span className="shopco-prod-orig">${p.orig}</span>}
+                  {p.orig && p.price && <span className="shopco-prod-discount">-{Math.round((1 - p.price / p.orig) * 100)}%</span>}
+                </div>
+              </Link>
+            ))
+          ) : (
+            <div style={{gridColumn: '1/-1', textAlign: 'center', padding: '40px', color: '#666'}}>More products coming soon...</div>
+          )}
         </div>
         <Link href="/shop" style={{ textDecoration: 'none' }}>
           <button className="shopco-view-all">View All</button>
