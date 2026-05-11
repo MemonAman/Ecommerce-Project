@@ -5,12 +5,13 @@ import Link from 'next/link';
 import { useCart } from '@/context/CartContext';
 import { useSession, signOut } from 'next-auth/react';
 import { Toaster } from 'react-hot-toast';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 export default function HeaderAndCart() {
   const { cart, isCartOpen, toggleCart, totalItems, totalPrice, updateQty, removeItem } = useCart();
   const { data: session } = useSession();
   const pathname = usePathname();
+  const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = React.useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
@@ -106,7 +107,10 @@ export default function HeaderAndCart() {
                       <span style={{ color: '#666' }}>{session.user?.email}</span>
                     </div>
                     <button 
-                      onClick={() => { setIsUserMenuOpen(false); signOut(); }}
+                      onClick={() => { 
+                        setIsUserMenuOpen(false); 
+                        signOut({ redirect: false }).then(() => router.refresh());
+                      }}
                       style={{ 
                         width: '100%', 
                         textAlign: 'left', 
@@ -197,7 +201,7 @@ export default function HeaderAndCart() {
           </div>
           <button className="checkout-btn" onClick={() => {
             if (isCartOpen) toggleCart();
-            window.location.href = '/cart';
+            router.push('/cart');
           }}>
             Go to Checkout
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>

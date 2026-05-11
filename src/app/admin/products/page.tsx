@@ -69,8 +69,31 @@ export default function AdminProducts() {
                     </span>
                   </td>
                   <td>
-                    <button className="admin-action-btn">Edit</button>
-                    <button className="admin-action-btn" style={{ color: '#FF3333' }}>Delete</button>
+                    <Link href={`/admin/products/edit/${p.id}`}>
+                      <button className="admin-action-btn">Edit</button>
+                    </Link>
+                    <button 
+                      className="admin-action-btn" 
+                      style={{ color: '#FF3333' }}
+                      onClick={async () => {
+                        if (confirm(`Are you sure you want to delete ${p.name}?`)) {
+                          try {
+                            const res = await fetch(`/api/products/${p.id}`, { method: 'DELETE' });
+                            if (res.ok) {
+                              setProducts(products.filter(item => item.id !== p.id));
+                              alert('Product deleted successfully');
+                            } else {
+                              alert('Failed to delete product');
+                            }
+                          } catch (err) {
+                            console.error(err);
+                            alert('Error deleting product');
+                          }
+                        }
+                      }}
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               ))}

@@ -38,7 +38,8 @@ export default function SignUp() {
           setError('Account created, but could not log in automatically. Please try signing in.');
         } else {
           const callbackUrl = searchParams.get('callbackUrl') || '/';
-          window.location.href = callbackUrl;
+          router.push(callbackUrl);
+          router.refresh();
         }
       } else {
         const data = await res.json();

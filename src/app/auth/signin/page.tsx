@@ -35,7 +35,8 @@ export default function SignIn() {
       setLoading(false);
     } else {
       const callbackUrl = searchParams.get('callbackUrl') || '/';
-      window.location.href = callbackUrl;
+      router.push(callbackUrl);
+      router.refresh();
     }
   };
 

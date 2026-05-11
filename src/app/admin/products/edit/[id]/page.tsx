@@ -1,12 +1,16 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, use } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
-export default function NewProduct() {
+export default function EditProduct({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
+  const resolvedParams = use(params);
+  const productId = resolvedParams.id;
+  
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     cat: 't-shirts',
@@ -20,31 +24,56 @@ export default function NewProduct() {
     sizes: ['S', 'M', 'L', 'XL'],
   });
 
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const res = await fetch(`/api/products/${productId}`);
+        if (res.ok) {
+          const data = await res.json();
+          setFormData({
+            name: data.name || '',
+            cat: data.cat || 't-shirts',
+            price: data.price || 0,
+            orig: data.orig || 0,
+            desc: data.desc || '',
+            img: data.img || '',
+            gender: data.gender || 'unisex',
+            style: data.style || 'casual',
+            colors: data.colors || ['#000000', '#FFFFFF'],
+            sizes: data.sizes || ['S', 'M', 'L', 'XL'],
+          });
+        } else {
+          alert('Failed to fetch product');
+          router.push('/admin/products');
+        }
+      } catch (error) {
+        console.error('Error fetching product:', error);
+        alert('An error occurred while fetching the product');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProduct();
+  }, [productId, router]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
+    setSaving(true);
 
     try {
-      // Generate a random numeric ID for now (simple approach)
-      const numericId = Math.floor(Math.random() * 10000) + 100;
-      
-      const productData = {
-        ...formData,
-        id: numericId,
-        rating: 4.5, // Default rating
-        reviews: 0,
-        price: Number(formData.price),
-        orig: formData.orig ? Number(formData.orig) : undefined,
-      };
-
-      const res = await fetch('/api/products', {
-        method: 'POST',
+      const res = await fetch(`/api/products/${productId}`, {
+        method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(productData),
+        body: JSON.stringify({
+          ...formData,
+          price: Number(formData.price),
+          orig: formData.orig ? Number(formData.orig) : undefined,
+        }),
       });
 
       if (res.ok) {
-        alert('Product created successfully!');
+        alert('Product updated successfully!');
         router.push('/admin/products');
       } else {
         const err = await res.json();
@@ -52,11 +81,19 @@ export default function NewProduct() {
       }
     } catch (error) {
       console.error(error);
-      alert('Failed to create product');
+      alert('Failed to update product');
     } finally {
-      setLoading(false);
+      setSaving(false);
     }
   };
+
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#f9f9f9' }}>
+        <p>Loading Product Data...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="admin-new-product">
@@ -65,7 +102,7 @@ export default function NewProduct() {
       </div>
 
       <div className="admin-table-container" style={{ padding: '40px', maxWidth: '800px' }}>
-        <h2 style={{ marginBottom: '30px' }}>Add New Product</h2>
+        <h2 style={{ marginBottom: '30px' }}>Edit Product (ID: {productId})</h2>
         
         <form onSubmit={handleSubmit} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
           <div style={{ gridColumn: 'span 2' }}>
@@ -216,11 +253,11 @@ export default function NewProduct() {
           <div style={{ gridColumn: 'span 2', marginTop: '20px' }}>
             <button 
               type="submit" 
-              disabled={loading}
+              disabled={saving}
               className="admin-btn-primary" 
               style={{ width: '100%' }}
             >
-              {loading ? 'Creating...' : 'Create Product'}
+              {saving ? 'Updating...' : 'Save Changes'}
             </button>
           </div>
         </form>

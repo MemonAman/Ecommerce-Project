@@ -23,6 +23,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         );
 
         if (!isPasswordCorrect) return null;
+        
+        console.log(`[AUTH DEBUG] Authorize for ${user.email}, DB Role: ${user.role}`);
 
         return {
           id: user._id.toString(),
@@ -33,18 +35,4 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       },
     }),
   ],
-  callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.role = (user as any).role;
-      }
-      return token;
-    },
-    async session({ session, token }) {
-      if (session.user) {
-        (session.user as any).role = token.role;
-      }
-      return session;
-    },
-  },
 })
