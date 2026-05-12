@@ -24,7 +24,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
     }
 
-    const adminEmail = process.env.ADMIN_EMAIL || 'aman123@gmail.com';
+    const adminEmail = process.env.ADMIN_EMAIL;
     if (user.role !== 'admin' && email !== adminEmail) {
       return NextResponse.json({ error: 'Not authorized as admin' }, { status: 403 });
     }
