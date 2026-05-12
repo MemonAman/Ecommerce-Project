@@ -113,6 +113,11 @@ export default function NewProduct() {
               <option value="jeans">Jeans</option>
               <option value="shorts">Shorts</option>
               <option value="hoodies">Hoodies</option>
+              <option value="shoes">Shoes</option>
+              <option value="accessories">Accessories</option>
+              <option value="outerwear">Outerwear</option>
+              <option value="watches">Watches</option>
+              <option value="bags">Bags</option>
             </select>
           </div>
 

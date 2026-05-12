@@ -3,11 +3,30 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useCart } from '@/context/CartContext';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import DressStyleSection from '@/components/DressStyleSection';
 
 export default function Home() {
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const heroContent = [
+    { type: 'image', src: '/hero.png' },
+    { type: 'video', src: '/mp_.mp4' },
+    { type: 'video', src: '/basketball.mp4' },
+    { type: 'video', src: '/shoes.mp4' },
+    { type: 'video', src: '/nike_air.mp4' },
+    { type: 'video', src: '/ac_fashion.mp4' },
+  ];
+  const [heroIndex, setHeroIndex] = useState(0);
+
+  useEffect(() => {
+    if (heroContent[heroIndex].type === 'image') {
+      const timer = setTimeout(() => {
+        setHeroIndex((prev) => (prev + 1) % heroContent.length);
+      }, 4000); // Stay on image for 4 seconds
+      return () => clearTimeout(timer);
+    }
+  }, [heroIndex]);
 
   useEffect(() => {
     fetch('/api/products')
@@ -89,7 +108,41 @@ export default function Home() {
           <div className="new-hero-right">
             <svg className="star-small" viewBox="0 0 100 100" fill="black"><path d="M50 0 C50 50 0 50 0 50 C50 50 50 100 50 100 C50 50 100 50 100 50 C50 50 50 0 50 0 Z" /></svg>
             <svg className="star-large" viewBox="0 0 100 100" fill="black"><path d="M50 0 C50 50 0 50 0 50 C50 50 50 100 50 100 C50 50 100 50 100 50 C50 50 50 0 50 0 Z" /></svg>
-            <img className="new-hero-img" src="/hero.png" alt="Fashion Hero" />
+            
+            <AnimatePresence mode="wait">
+              {heroContent[heroIndex].type === 'image' ? (
+                <motion.img 
+                  key="hero-image"
+                  className="new-hero-img" 
+                  src={heroContent[heroIndex].src}
+                  alt="Fashion Hero"
+                  initial={{ opacity: 0, x: 100 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -100 }}
+                  transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] }}
+                />
+              ) : (
+                <motion.div
+                  key={`hero-video-${heroIndex}`}
+                  className="new-hero-img"
+                  initial={{ opacity: 0, x: 100 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -100 }}
+                  transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] }}
+                  style={{ overflow: 'hidden' }}
+                >
+                  <video
+                    autoPlay
+                    muted
+                    playsInline
+                    onEnded={() => setHeroIndex((prev) => (prev + 1) % heroContent.length)}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '20px' }}
+                  >
+                    <source src={heroContent[heroIndex].src} type="video/mp4" />
+                  </video>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
 
@@ -200,27 +253,7 @@ export default function Home() {
       </div>
 
       {/* BROWSE BY DRESS STYLE */}
-      <div className="shopco-dress-style">
-        <h2 className="shopco-dress-title">BROWSE BY DRESS STYLE</h2>
-        <div className="shopco-dress-grid">
-          <Link href="/shop?cat=casual" className="shopco-dress-card">
-            <span className="shopco-dress-label">Casual</span>
-            <img src="/casual.jpg" alt="Casual" />
-          </Link>
-          <Link href="/shop?cat=formal" className="shopco-dress-card">
-            <span className="shopco-dress-label">Formal</span>
-            <img src="/formal.jpg" alt="Formal" />
-          </Link>
-          <Link href="/shop?cat=party" className="shopco-dress-card">
-            <span className="shopco-dress-label">Party</span>
-            <img src="/party.jpg" alt="Party" />
-          </Link>
-          <Link href="/shop?cat=gym" className="shopco-dress-card">
-            <span className="shopco-dress-label">Gym</span>
-            <img src="/gym.jpg" alt="Gym" />
-          </Link>
-        </div>
-      </div>
+      <DressStyleSection />
 
       {/* OUR HAPPY CUSTOMERS */}
       <div className="shopco-reviews">

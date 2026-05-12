@@ -28,6 +28,7 @@ export default function SignIn() {
       redirect: false,
       email,
       password,
+      loginSource: 'website',
     });
 
     if (result?.error) {

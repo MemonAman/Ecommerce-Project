@@ -9,34 +9,40 @@ export const authConfig = {
     async jwt({ token, user }) {
       if (user) {
         token.role = (user as any).role;
+        token.loginSource = (user as any).loginSource;
       }
       return token;
     },
     async session({ session, token }) {
       if (session.user) {
         (session.user as any).role = token.role;
+        (session.user as any).loginSource = token.loginSource;
       }
       return session;
     },
-    authorized({ auth, request: { nextUrl } }) {
-      const isLoggedIn = !!auth?.user;
-      const userEmail = auth?.user?.email;
-      const isAdmin = (auth?.user as any)?.role === 'admin' || userEmail === 'aman123@gmail.com';
+    authorized({ auth, request }) {
+      const { nextUrl, cookies } = request;
       const isAdminRoute = nextUrl.pathname.startsWith('/admin');
-      
-      console.log(`[AUTH DEBUG] Path: ${nextUrl.pathname}, LoggedIn: ${isLoggedIn}, Email: ${userEmail}, Admin: ${isAdmin}`);
+      const isLoginRoute = nextUrl.pathname === '/admin/login';
 
       if (isAdminRoute) {
-        if (!isLoggedIn) {
-          console.log("[AUTH DEBUG] Redirecting guest to sign-in");
-          return false;
+        if (isLoginRoute) return true;
+
+        const adminToken = cookies.get('admin-token')?.value;
+        if (adminToken !== 'secure-admin-session-xyz') {
+          return Response.redirect(new URL('/admin/login', nextUrl));
         }
-        if (!isAdmin) {
-          console.log("[AUTH DEBUG] Redirecting non-admin user to home");
-          return Response.redirect(new URL('/', nextUrl));
-        }
+        return true;
       }
+
+      // Storefront uses NextAuth
+      const isLoggedIn = !!auth?.user;
+      const isProtected = nextUrl.pathname.startsWith('/checkout');
       
+      if (isProtected && !isLoggedIn) {
+        return false;
+      }
+
       return true;
     },
   },

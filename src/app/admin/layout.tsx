@@ -10,6 +10,19 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const pathname = usePathname();
   const { data: session } = useSession();
 
+  // Heartbeat Session: Keep the 10-second cookie alive as long as this tab is open
+  React.useEffect(() => {
+    // Ping immediately on mount to be safe
+    fetch('/api/admin/ping', { method: 'POST' }).catch(() => {});
+    
+    // Ping every 5 seconds
+    const interval = setInterval(() => {
+      fetch('/api/admin/ping', { method: 'POST' }).catch(() => {});
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   const navItems = [
     { name: 'Dashboard', path: '/admin', icon: '📊' },
     { name: 'Products', path: '/admin/products', icon: '🛍️' },
@@ -17,10 +30,17 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     { name: 'Users', path: '/admin/users', icon: '👥' },
   ];
 
+  const handleLogout = async () => {
+    await fetch('/api/admin/logout', { method: 'POST' });
+    window.location.href = '/admin/login';
+  };
+
   return (
     <div className="admin-layout">
       <aside className="admin-sidebar">
-        <div className="admin-logo">VŌGE ADMIN</div>
+        <Link href="/" className="admin-logo" style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
+          VŌGE ADMIN
+        </Link>
         
         <nav className="admin-nav">
           {navItems.map((item) => (
@@ -37,7 +57,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
         <div style={{ marginTop: 'auto', padding: '10px' }}>
           <button 
-            onClick={() => signOut({ callbackUrl: '/' })}
+            onClick={handleLogout}
             style={{ 
               width: '100%', 
               background: 'rgba(255,255,255,0.1)', 
@@ -64,9 +84,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </div>
           
           <div className="admin-user-pill">
-            <span style={{ fontSize: '14px', fontWeight: 600 }}>{session?.user?.name}</span>
+            <span style={{ fontSize: '14px', fontWeight: 600 }}>System Admin</span>
             <div style={{ width: '32px', height: '32px', background: '#000', borderRadius: '50%', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px' }}>
-              {session?.user?.name?.charAt(0)}
+              A
             </div>
           </div>
         </header>

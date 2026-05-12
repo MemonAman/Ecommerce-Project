@@ -4,15 +4,15 @@ import Order from '@/models/Order';
 import User from '@/models/User';
 import { auth } from '@/auth';
 
-export async function GET() {
+import { cookies } from 'next/headers';
+
+export async function GET(req: Request) {
   try {
-    const session = await auth();
+    const cookieStore = await cookies();
+    const adminToken = cookieStore.get('admin-token');
     
-    // Admin check
-    if (!session || (session.user as any).role !== 'admin') {
-      if (session?.user?.email !== 'aman123@gmail.com') {
-        return NextResponse.json({ message: 'Unauthorized' }, { status: 403 });
-      }
+    if (adminToken?.value !== 'secure-admin-session-xyz') {
+      return NextResponse.json({ message: 'Unauthorized' }, { status: 403 });
     }
 
     await dbConnect();

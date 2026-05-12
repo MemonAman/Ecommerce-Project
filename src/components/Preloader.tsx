@@ -42,7 +42,8 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
       onComplete(); 
     }, 1600); // Total duration 1.6s
     return () => { clearTimeout(t1); };
-  }, [onComplete]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <AnimatePresence mode="wait">
