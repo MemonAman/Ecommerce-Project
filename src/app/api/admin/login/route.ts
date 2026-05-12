@@ -24,14 +24,20 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
     }
 
-    if (user.role !== 'admin' && email !== 'aman123@gmail.com') {
+    const adminEmail = process.env.ADMIN_EMAIL || 'aman123@gmail.com';
+    if (user.role !== 'admin' && email !== adminEmail) {
       return NextResponse.json({ error: 'Not authorized as admin' }, { status: 403 });
     }
 
     const response = NextResponse.json({ success: true });
     
     // Set a secure HTTP-only cookie for the admin session
-    response.cookies.set('admin-token', 'secure-admin-session-xyz', {
+    const secret = process.env.ADMIN_SESSION_TOKEN;
+    if (!secret) {
+      return NextResponse.json({ error: 'Server configuration error' }, { status: 500 });
+    }
+
+    response.cookies.set('admin-token', secret, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',

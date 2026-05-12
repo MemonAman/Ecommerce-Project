@@ -29,7 +29,8 @@ export const authConfig = {
         if (isLoginRoute) return true;
 
         const adminToken = cookies.get('admin-token')?.value;
-        if (adminToken !== 'secure-admin-session-xyz') {
+        const secret = process.env.ADMIN_SESSION_TOKEN;
+        if (!secret || adminToken !== secret) {
           return Response.redirect(new URL('/admin/login', nextUrl));
         }
         return true;
