@@ -44,7 +44,7 @@ export default function ProductDetail() {
       <div className="shopco-detail-layout">
         <div className="shopco-detail-gallery">
           <div className="shopco-gallery-thumbs">
-            {(currentProduct.gallery || [currentProduct.img]).map((g, i) => (
+            {(currentProduct.gallery || [currentProduct.img]).map((g: string, i: number) => (
               <div key={i} className={`shopco-gallery-thumb ${i === 0 ? 'active' : ''}`}>
                 <img src={g} alt={`Thumb ${i + 1}`} />
               </div>
@@ -82,7 +82,7 @@ export default function ProductDetail() {
 
           <div className="shopco-detail-option-title">Select Colors</div>
           <div className="shopco-color-grid" style={{marginBottom: '24px'}}>
-            {currentProduct.colors.map((c) => (
+            {currentProduct.colors.map((c: string) => (
               <div 
                 key={c}
                 className={`shopco-color-circle ${selectedColor === c ? 'active' : ''}`}
@@ -97,7 +97,7 @@ export default function ProductDetail() {
 
           <div className="shopco-detail-option-title">Choose Size</div>
           <div className="shopco-size-chips" style={{marginBottom: '24px'}}>
-            {currentProduct.sizes.map((s) => (
+            {currentProduct.sizes.map((s: string) => (
               <span 
                 key={s} 
                 className={`shopco-size-chip ${selectedSize === s ? 'active' : ''}`}

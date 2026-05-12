@@ -106,9 +106,14 @@ export default function Home() {
             </motion.div>
           </div>
           <div className="new-hero-right">
-            <svg className="star-small" viewBox="0 0 100 100" fill="black"><path d="M50 0 C50 50 0 50 0 50 C50 50 50 100 50 100 C50 50 100 50 100 50 C50 50 50 0 50 0 Z" /></svg>
-            <svg className="star-large" viewBox="0 0 100 100" fill="black"><path d="M50 0 C50 50 0 50 0 50 C50 50 50 100 50 100 C50 50 100 50 100 50 C50 50 50 0 50 0 Z" /></svg>
+            {heroIndex === 0 && (
+              <>
+                <svg className="star-small" viewBox="0 0 100 100" fill="black"><path d="M50 0 C50 50 0 50 0 50 C50 50 50 100 50 100 C50 50 100 50 100 50 C50 50 50 0 50 0 Z" /></svg>
+                <svg className="star-large" viewBox="0 0 100 100" fill="black"><path d="M50 0 C50 50 0 50 0 50 C50 50 50 100 50 100 C50 50 100 50 100 50 C50 50 50 0 50 0 Z" /></svg>
+              </>
+            )}
             
+
             <AnimatePresence mode="wait">
               {heroContent[heroIndex].type === 'image' ? (
                 <motion.img 

@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 
-export default function SignUp() {
+function SignUpForm() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -27,7 +27,6 @@ export default function SignUp() {
       });
 
       if (res.ok) {
-        // Automatically sign in the user
         const result = await signIn('credentials', {
           redirect: false,
           email,
@@ -120,5 +119,13 @@ export default function SignUp() {
         </p>
       </div>
     </div>
+  );
+}
+
+export default function SignUp() {
+  return (
+    <Suspense fallback={<div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#F0EEED' }}>Loading...</div>}>
+      <SignUpForm />
+    </Suspense>
   );
 }

@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { signIn } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-export default function SignIn() {
+function SignInForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -94,9 +94,17 @@ export default function SignIn() {
         </form>
 
         <p style={{ textAlign: 'center', marginTop: '24px', color: '#666', fontSize: '14px' }}>
-          Don't have an account? <Link href={`/auth/signup${searchParams.get('callbackUrl') ? `?callbackUrl=${searchParams.get('callbackUrl')}` : ''}`} style={{ color: '#000', fontWeight: 700 }}>Sign Up</Link>
+          Don&apos;t have an account? <Link href={`/auth/signup${searchParams.get('callbackUrl') ? `?callbackUrl=${searchParams.get('callbackUrl')}` : ''}`} style={{ color: '#000', fontWeight: 700 }}>Sign Up</Link>
         </p>
       </div>
     </div>
+  );
+}
+
+export default function SignIn() {
+  return (
+    <Suspense fallback={<div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading...</div>}>
+      <SignInForm />
+    </Suspense>
   );
 }

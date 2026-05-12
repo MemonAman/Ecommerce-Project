@@ -67,7 +67,8 @@ export default function NewProduct() {
       <div className="admin-table-container" style={{ padding: '40px', maxWidth: '800px' }}>
         <h2 style={{ marginBottom: '30px' }}>Add New Product</h2>
         
-        <form onSubmit={handleSubmit} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+        <form onSubmit={handleSubmit} className="admin-product-form">
+
           <div style={{ gridColumn: 'span 2' }}>
             <label style={labelStyle}>Product Name</label>
             <input 
